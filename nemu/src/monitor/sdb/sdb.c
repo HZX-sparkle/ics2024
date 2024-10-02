@@ -68,7 +68,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-  { "si", "Step one instruction exactly.\n\tUsage: si [N]\n\tArgument N means step N times (or till program stops for another reason).", cmd_si },
+  { "si", "Step one instruction exactly.", cmd_si },
   // { "info", "Display program status", cmd_info },
   // { "x N EXPR", "Scan memory", cmd_x },
   // { "p EXPR", "Expression evaluation", cmd_p },
