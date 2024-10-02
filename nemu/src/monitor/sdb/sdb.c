@@ -147,8 +147,10 @@ static int cmd_x(char *args) {
     printf("Arguments required (x N EXPR).\n");
   } else {
     int n = (int)*arg1;
-    bool success;
-    vaddr_t addr = expr(arg2, &success);
+    bool success = true;
+    // vaddr_t addr = expr(arg2, &success);
+    char* endptr;
+    vaddr_t addr = strtol(arg2, &endptr, 16);
     if ( success ) 
     {
       printf("%-20s %-20s", "Address", "Value");
