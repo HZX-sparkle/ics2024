@@ -57,6 +57,8 @@ static int cmd_help(char *args);
 
 static int cmd_si(char *args);
 
+static int cmd_info(char *args);
+
 
 static struct {
   const char *name;
@@ -69,7 +71,7 @@ static struct {
 
   /* TODO: Add more commands */
   { "si", "Step one instruction exactly.", cmd_si },
-  // { "info", "Display program status", cmd_info },
+  { "info", "Display program status", cmd_info },
   // { "x N EXPR", "Scan memory", cmd_x },
   // { "p EXPR", "Expression evaluation", cmd_p },
   // { "w EXPR", "Set watchpoint", cmd_w },
@@ -112,6 +114,21 @@ static int cmd_si(char *args) {
   return 0;
 }
 
+static int cmd_info(char *args) {
+  /* extract the first argument */
+  char *arg = strtok(NULL, " ");
+
+  if ( arg == NULL ) {
+    /* no argument given */
+  } else {
+    switch ( *arg ) {
+      case 'r' : isa_reg_display();break;
+      case 'w' : 
+      default : printf("Unknown command '%s'\n", arg);
+    }
+  }
+  return 0;
+}
 
 void sdb_set_batch_mode() {
   is_batch_mode = true;
