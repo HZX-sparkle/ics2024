@@ -68,8 +68,8 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-  { "si [N]", "Execute N steps, default 1 step if N is not given", cmd_si },
-  // { "info SUBCMD", "Display program status", cmd_info },
+  { "si", "Step one instruction exactly.\nUsage: si [N]\nArgument N means step N times (or till program stops for another reason).", cmd_si },
+  // { "info", "Display program status", cmd_info },
   // { "x N EXPR", "Scan memory", cmd_x },
   // { "p EXPR", "Expression evaluation", cmd_p },
   // { "w EXPR", "Set watchpoint", cmd_w },
