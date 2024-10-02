@@ -146,7 +146,7 @@ static int cmd_x(char *args) {
   {
     printf("Arguments required (x N EXPR).\n");
   } else {
-    int n = (int)*arg1;
+    int n = atoi(arg1);
     bool success = true;
     // vaddr_t addr = expr(arg2, &success);
     char* endptr;
