@@ -75,7 +75,7 @@ static struct {
   /* TODO: Add more commands */
   { "si", "Step one instruction exactly.", cmd_si },
   { "info", "Display program status", cmd_info },
-  { "x N EXPR", "Examine memory", cmd_x },
+  { "x", "Examine memory", cmd_x },
   // { "p EXPR", "Expression evaluation", cmd_p },
   // { "w EXPR", "Set watchpoint", cmd_w },
   // { "d EXPR", "Delete watchpoint", cmd_w },
