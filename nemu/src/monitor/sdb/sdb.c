@@ -18,6 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+#include <memory/vaddr.h>
 
 static int is_batch_mode = false;
 
@@ -59,6 +60,8 @@ static int cmd_si(char *args);
 
 static int cmd_info(char *args);
 
+static int cmd_x(char *args);
+
 
 static struct {
   const char *name;
@@ -72,7 +75,7 @@ static struct {
   /* TODO: Add more commands */
   { "si", "Step one instruction exactly.", cmd_si },
   { "info", "Display program status", cmd_info },
-  // { "x N EXPR", "Scan memory", cmd_x },
+  { "x N EXPR", "Examine memory", cmd_x },
   // { "p EXPR", "Expression evaluation", cmd_p },
   // { "w EXPR", "Set watchpoint", cmd_w },
   // { "d EXPR", "Delete watchpoint", cmd_w },
@@ -120,11 +123,41 @@ static int cmd_info(char *args) {
 
   if ( arg == NULL ) {
     /* no argument given */
+    printf("List of info subcommands:\n\n");
+    printf("info r -- List of registers and their content.\n" );
+    printf("info w -- List of watchpoints.\n" );
   } else {
     switch ( *arg ) {
       case 'r' : isa_reg_display();break;
       case 'w' : 
       default : printf("Unknown command '%s'\n", arg);
+    }
+  }
+  return 0;
+}
+
+static int cmd_x(char *args) {
+  /* extract the first argument */
+  char *arg1 = strtok(NULL, " ");
+  /* extract the second argument */
+  char *arg2 = strtok(NULL, " ");
+
+  if ( arg1 == NULL || arg2 == NULL )
+  {
+    printf("Arguments required (x N EXPR).\n");
+  } else {
+    int n = (int)*arg1;
+    bool success;
+    vaddr_t addr = expr(arg2, &success);
+    if ( success ) 
+    {
+      printf("%-20s %-20s", "Address", "Value");
+      for (size_t i = 0; i < n; i++)
+      {
+        word_t ret = vaddr_read(addr , 4);
+        printf("%s%-18x %s%-18x", "0x", addr, "0x", ret);
+        addr += 4;
+      }
     }
   }
   return 0;
