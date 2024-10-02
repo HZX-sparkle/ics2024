@@ -153,11 +153,11 @@ static int cmd_x(char *args) {
     vaddr_t addr = strtol(arg2, &endptr, 16);
     if ( success ) 
     {
-      printf("%-20s %-20s", "Address", "Value");
+      printf("%-20s %-20s\n", "Address", "Value");
       for (size_t i = 0; i < n; i++)
       {
         word_t ret = vaddr_read(addr , 4);
-        printf("%s%-18x %s%-18x", "0x", addr, "0x", ret);
+        printf("%s%-18x %s%-18x\n", "0x", addr, "0x", ret);
         addr += 4;
       }
     }
