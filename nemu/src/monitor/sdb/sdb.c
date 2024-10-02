@@ -55,6 +55,9 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args);
+
+
 static struct {
   const char *name;
   const char *description;
@@ -65,7 +68,12 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-
+  { "si [N]", "Execute N steps, default 1 step if N is not given", cmd_si },
+  // { "info SUBCMD", "Display program status", cmd_info },
+  // { "x N EXPR", "Scan memory", cmd_x },
+  // { "p EXPR", "Expression evaluation", cmd_p },
+  // { "w EXPR", "Set watchpoint", cmd_w },
+  // { "d EXPR", "Delete watchpoint", cmd_w },
 };
 
 #define NR_CMD ARRLEN(cmd_table)
@@ -92,6 +100,23 @@ static int cmd_help(char *args) {
   }
   return 0;
 }
+
+static int cmd_si(char *args) {
+  /* extract the first argument */
+  char *arg = strtok(NULL, " ");
+  int n;
+
+  if (arg == NULL) {
+    /* no argument given, N defaults to 1*/
+    n = 1;
+  }
+  else {
+    n = atoi(arg);
+  }
+  cpu_exec(n);
+  return 0;
+}
+
 
 void sdb_set_batch_mode() {
   is_batch_mode = true;
