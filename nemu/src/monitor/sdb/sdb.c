@@ -86,7 +86,7 @@ static int cmd_help(char *args) {
   if (arg == NULL) {
     /* no argument given */
     for (i = 0; i < NR_CMD; i ++) {
-      printf("%s - %-30s\n", cmd_table[i].name, cmd_table[i].description);
+      printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
     }
   }
   else {
@@ -104,15 +104,10 @@ static int cmd_help(char *args) {
 static int cmd_si(char *args) {
   /* extract the first argument */
   char *arg = strtok(NULL, " ");
-  int n;
+  /* n defaults to 1 */
+  int n = 1;
 
-  if (arg == NULL) {
-    /* no argument given, N defaults to 1*/
-    n = 1;
-  }
-  else {
-    n = atoi(arg);
-  }
+  if (arg != NULL) n = atoi(arg);
   cpu_exec(n);
   return 0;
 }
