@@ -173,9 +173,9 @@ static int cmd_test(char *args) {
   FILE *fp = fopen("/home/kali/ics2024/nemu/tools/gen-expr/input", "r");
   char e[65536] = {};
   word_t result;
-  while(fscanf(fp, "%d %s",&result, e) != EOF) {
+  while(fscanf(fp, "%u %s",&result, e) != EOF) {
     word_t my_result = expr(e, &success);
-    printf("my result: %d\n", my_result);
+    printf("my result: %u\n", my_result);
     assert(my_result==result);
   }
   return 0;
