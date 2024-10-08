@@ -161,10 +161,10 @@ static bool check_parentheses(int p, int q) {
   }
   if ( cnt != 0 ) {
     printf("Bad expression: parentheses invalid\n");
-    for (int i = p; i <= q; i++) {
-      if( tokens[i].type == '(' || tokens[i].type == ')') printf("%s", tokens[i].str);
-    }
-    printf("\n");
+    // for (int i = p; i <= q; i++) {
+    //   if( tokens[i].type == '(' || tokens[i].type == ')') printf("%s", tokens[i].str);
+    // }
+    // printf("\n");
     assert(0);
   }
   if ( flag ) return false;
@@ -173,7 +173,7 @@ static bool check_parentheses(int p, int q) {
 }
 
 static word_t eval(int p, int q) {
-  printf("%d %d\n", p, q);
+  // printf("%d %d\n", p, q);
   if (p > q) {
     /* Bad expression or --2 situation */
     if( q < 0 ) return 0;
@@ -185,9 +185,9 @@ static word_t eval(int p, int q) {
     * For now this token should be a number.
     * Return the value of the number.
     */
-    printf("%s\n", tokens[p].str);
+    // printf("%s\n", tokens[p].str);
     int val = atoi(tokens[p].str);
-    printf("%d\n", val);
+    // printf("%d\n", val);
     return val;
   }
   else if (check_parentheses(p, q) == true) {
@@ -241,7 +241,7 @@ static word_t eval(int p, int q) {
       break;
     }
 
-    printf("main op: %c\n", tokens[op].type);
+    // printf("main op: %c\n", tokens[op].type);
     
     // 2. Get the value of two parts splited by op.
     word_t val1 = eval(p, op - 1 );
@@ -279,37 +279,37 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  // int cnt=1;
-  // for (int i = 1; i < nr_token; i++)
-  // {
-  //   if( tokens[i].type == '-' && tokens[i-1].type != TK_DEC && tokens[i-1].type != ')' ) {
-  //     tokens[i].type = TK_NOTYPE;
-  //     cnt*=-1;
-  //   }
-  //   if(cnt==-1&& (tokens[i].type=='(' || tokens[i].type==TK_DEC)) {
-  //     char str[32]="-";
-  //     strcat(str, tokens[i].str);
-  //     strcpy(tokens[i].str, str);
-  //     cnt=1;  
-  //   }
-  // }
-  
-  // int j = 0;
-  // for (int i = 0; i < nr_token; i++)
-  // {
-  //   if(tokens[i].type != TK_NOTYPE) {
-  //     tokens[j] = tokens[i];
-  //     j++;
-  //   }
-  // }
-  // nr_token = j;
-
-  for(int i=0;i<nr_token;i++){
-    if(tokens[i].type == TK_DEC) printf("%s ", tokens[i].str);
+  int cnt=1;
+  for (int i = 1; i < nr_token; i++)
+  {
+    if( tokens[i].type == '-' && tokens[i-1].type != TK_DEC && tokens[i-1].type != ')' ) {
+      tokens[i].type = TK_NOTYPE;
+      cnt*=-1;
+    }
+    if(cnt==-1&& (tokens[i].type=='(' || tokens[i].type==TK_DEC)) {
+      char str[32]="-";
+      strcat(str, tokens[i].str);
+      strcpy(tokens[i].str, str);
+      cnt=1;  
+    }
   }
-  printf("\n");
   
-  printf("e: %s\n", e);
+  int j = 0;
+  for (int i = 0; i < nr_token; i++)
+  {
+    if(tokens[i].type != TK_NOTYPE) {
+      tokens[j] = tokens[i];
+      j++;
+    }
+  }
+  nr_token = j;
+
+  // for(int i=0;i<nr_token;i++){
+  //   if(tokens[i].type == TK_DEC) printf("%s ", tokens[i].str);
+  // }
+  // printf("\n");
+  
+  // printf("e: %s\n", e);
   return eval(0, nr_token-1);
 
 }
