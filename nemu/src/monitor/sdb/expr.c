@@ -260,7 +260,7 @@ static word_t eval(int p, int q) {
         break;
     }
   }
-  return 1;
+  return 0;
 }
 
 word_t expr(char *e, bool *success) {
