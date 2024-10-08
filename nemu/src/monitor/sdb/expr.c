@@ -302,6 +302,7 @@ word_t expr(char *e, bool *success) {
   }
   nr_token = j;
   
+  printf("e: %s\n", e);
   return eval(0, nr_token-1);
 
 }
