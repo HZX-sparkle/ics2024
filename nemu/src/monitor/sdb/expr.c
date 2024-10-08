@@ -171,6 +171,7 @@ static bool check_parentheses(int p, int q) {
 }
 
 static word_t eval(int p, int q) {
+  printf("%d %d\n", p, q);
   if (p > q) {
     /* Bad expression or --2 situation */
     if( q < 0 ) return 0;
@@ -267,8 +268,6 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-
-  printf("%s\n", e);
 
   /* TODO: Insert codes to evaluate the expression. */
   int cnt=1;
