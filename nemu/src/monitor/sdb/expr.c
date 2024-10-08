@@ -176,7 +176,7 @@ static int eval(int p, int q) {
   // printf("%d %d\n", p, q);
   if (p > q) {
     /* Bad expression or --2 situation */
-    // if( q < 0 ) return 0;
+    if( q < 0 ) return 0;
     printf("Bad expression: p > q\n");
     assert(0);
   }
