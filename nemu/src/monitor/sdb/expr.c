@@ -165,8 +165,6 @@ static bool check_parentheses(int p, int q) {
     printf("\n");
     assert(0);
   }
-  printf("%d\n", flag);
-  printf("%c\n", (char)tokens[q].type);
   if ( flag ) return false;
   if ( tokens[q].type != ')') return false;
   return true;
