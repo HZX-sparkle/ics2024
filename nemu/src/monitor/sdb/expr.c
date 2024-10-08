@@ -277,30 +277,35 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  int cnt=1;
-  for (int i = 1; i < nr_token; i++)
-  {
-    if( tokens[i].type == '-' && tokens[i-1].type != TK_DEC && tokens[i-1].type != ')' ) {
-      tokens[i].type = TK_NOTYPE;
-      cnt*=-1;
-    }
-    if(cnt==-1&& (tokens[i].type=='(' || tokens[i].type==TK_DEC)) {
-      char str[32]="-";
-      strcat(str, tokens[i].str);
-      strcpy(tokens[i].str, str);
-      cnt=1;  
-    }
-  }
+  // int cnt=1;
+  // for (int i = 1; i < nr_token; i++)
+  // {
+  //   if( tokens[i].type == '-' && tokens[i-1].type != TK_DEC && tokens[i-1].type != ')' ) {
+  //     tokens[i].type = TK_NOTYPE;
+  //     cnt*=-1;
+  //   }
+  //   if(cnt==-1&& (tokens[i].type=='(' || tokens[i].type==TK_DEC)) {
+  //     char str[32]="-";
+  //     strcat(str, tokens[i].str);
+  //     strcpy(tokens[i].str, str);
+  //     cnt=1;  
+  //   }
+  // }
   
-  int j = 0;
-  for (int i = 0; i < nr_token; i++)
-  {
-    if(tokens[i].type != TK_NOTYPE) {
-      tokens[j] = tokens[i];
-      j++;
-    }
+  // int j = 0;
+  // for (int i = 0; i < nr_token; i++)
+  // {
+  //   if(tokens[i].type != TK_NOTYPE) {
+  //     tokens[j] = tokens[i];
+  //     j++;
+  //   }
+  // }
+  // nr_token = j;
+
+  for(int i=0;i<nr_token;i++){
+    if(tokens[i].type == TK_DEC) printf("%s ", tokens[i].str);
   }
-  nr_token = j;
+  printf("\n");
   
   printf("e: %s\n", e);
   return eval(0, nr_token-1);
