@@ -48,7 +48,7 @@ static void gen_rand_op() {
 }
 
 static void gen_rand_expr() {
-  if(strlen(buf)>20){
+  if(strlen(buf)>50){
     gen_num();
     return;
   }
@@ -70,9 +70,7 @@ int main(int argc, char *argv[]) {
   for (i = 0; i < loop; i ++) {
     buf[0] = '\0';
     gen_rand_expr();
-    if(strlen(buf)>20){
-      continue;
-  }
+ 
 
     // printf("%s\n", buf);
     sprintf(code_buf, code_format, buf);
