@@ -124,8 +124,9 @@ static bool make_token(char *e) {
               return false;
             }
             tokens[nr_token].type = TK_DEC;
-            strncpy(tokens[nr_token].str, substr_start, substr_len+1);
-            printf("sub_start: %s , tkstr: %s",substr_start,tokens[nr_token].str);
+            strncpy(tokens[nr_token].str, substr_start, substr_len-1);
+            // tokens[nr_token].str[substr_len]=0;
+            printf("sub_start: %s , tkstr: %s \n",substr_start,tokens[nr_token].str);
 
             nr_token++;
             break;
