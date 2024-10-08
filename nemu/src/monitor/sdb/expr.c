@@ -183,7 +183,9 @@ static word_t eval(int p, int q) {
     * For now this token should be a number.
     * Return the value of the number.
     */
-    return atoi(tokens[p].str);
+    int val = atoi(tokens[p].str);
+    printf("%d\n", val);
+    return val;
   }
   else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
