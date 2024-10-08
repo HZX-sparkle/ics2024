@@ -159,6 +159,10 @@ static bool check_parentheses(int p, int q) {
   }
   if ( cnt != 0 ) {
     printf("Bad expression: parentheses invalid\n");
+    for (int i = p; i <= q; i++) {
+      if( tokens[i].type == '(' || tokens[i].type == ')') printf("%s", tokens[i].str);
+    }
+    printf("\n");
     assert(0);
   }
   if ( flag ) return false;
