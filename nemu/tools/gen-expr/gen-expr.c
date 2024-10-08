@@ -48,6 +48,10 @@ static void gen_rand_op() {
 }
 
 static void gen_rand_expr() {
+  if(strlen(buf)>20){
+    gen_num();
+    return;
+  }
   switch (rand()%3) {
     case 0: gen_num(); break;
     case 1: gen('('); gen_rand_expr(); gen(')'); break;
@@ -66,12 +70,9 @@ int main(int argc, char *argv[]) {
   for (i = 0; i < loop; i ++) {
     buf[0] = '\0';
     gen_rand_expr();
-    int flag=1;
-    for(int i=0;i<20;i++){
-      if(buf[i]==0)
-      flag=0;
-    }
-    if(flag)continue;
+    if(strlen(buf)>20){
+      continue;
+  }
 
     // printf("%s\n", buf);
     sprintf(code_buf, code_format, buf);
@@ -87,8 +88,8 @@ int main(int argc, char *argv[]) {
     fp = popen("/tmp/.expr", "r");
     assert(fp != NULL);
 
-    uint32_t result;
-    ret = fscanf(fp, "%u", &result);
+    int result;
+    ret = fscanf(fp, "%d", &result);
     pclose(fp);
 
     printf("%u %s\n", result, buf);

@@ -244,8 +244,8 @@ static word_t eval(int p, int q) {
     printf("main op: %c, position: %d\n", tokens[op].type, op);
     
     // 2. Get the value of two parts splited by op.
-    word_t val1 = eval(p, op - 1 );
-    word_t val2 = eval(op + 1, q);
+    int val1 = eval(p, op - 1 );
+    int val2 = eval(op + 1, q);
     switch (op_type)
     {
       case '+':
