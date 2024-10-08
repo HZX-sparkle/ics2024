@@ -268,6 +268,8 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
 
+  printf("%s\n", e);
+
   /* TODO: Insert codes to evaluate the expression. */
   int cnt=1;
   for (int i = 1; i < nr_token; i++)
