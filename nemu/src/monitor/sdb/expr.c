@@ -149,7 +149,7 @@ static bool check_parentheses(int p, int q) {
   int cnt = 0;
   bool flag = false;
   for (int i = p; i <= q; i++) {
-    if (cnt == 0 && i != 0) flag = true;
+    if (cnt == 0 && i != p) flag = true;
     if ( tokens[i].type == '(') cnt++;
     if ( tokens[i].type == ')') cnt--;
     if ( cnt < 0 ) {
@@ -166,6 +166,7 @@ static bool check_parentheses(int p, int q) {
     assert(0);
   }
   printf("%d\n", flag);
+  printf("%c\n", (char)tokens[q].type);
   if ( flag ) return false;
   if ( tokens[q].type != ')') return false;
   return true;
