@@ -176,6 +176,7 @@ static int cmd_test(char *args) {
   while(fscanf(fp, "%u %s",&result, e) != EOF) {
     word_t my_result = expr(e, &success);
     printf("%s\n", e);
+    printf("result: %u\n", result);
     printf("my result: %u\n", my_result);
     assert(my_result==result);
   }
