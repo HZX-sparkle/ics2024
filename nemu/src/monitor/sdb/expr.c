@@ -221,8 +221,10 @@ static word_t eval(int p, int q) {
           break;
         
         case '*': case '/':
-          op = i;
-          op_type = tokens[i].type;
+          if( op == -1 ){
+            op = i;
+            op_type = tokens[i].type;
+          }
           continue;
 
         case TK_DEC:
