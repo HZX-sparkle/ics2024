@@ -66,6 +66,12 @@ int main(int argc, char *argv[]) {
   for (i = 0; i < loop; i ++) {
     buf[0] = '\0';
     gen_rand_expr();
+    int flag=1;
+    for(int i=0;i<20;i++){
+      if(buf[i]==0)
+      flag=0;
+    }
+    if(flag)continue;
 
     // printf("%s\n", buf);
     sprintf(code_buf, code_format, buf);
