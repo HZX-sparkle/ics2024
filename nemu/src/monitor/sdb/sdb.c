@@ -62,6 +62,8 @@ static int cmd_info(char *args);
 
 static int cmd_x(char *args);
 
+static int cmd_test(char *args);
+
 
 static struct {
   const char *name;
@@ -76,6 +78,7 @@ static struct {
   { "si", "Step one instruction exactly.", cmd_si },
   { "info", "Display program status", cmd_info },
   { "x", "Examine memory", cmd_x },
+  { "test", "Test your functions", cmd_test}
   // { "p EXPR", "Expression evaluation", cmd_p },
   // { "w EXPR", "Set watchpoint", cmd_w },
   // { "d EXPR", "Delete watchpoint", cmd_w },
@@ -161,6 +164,18 @@ static int cmd_x(char *args) {
         addr += 4;
       }
     }
+  }
+  return 0;
+}
+
+static int cmd_test(char *args) {
+  bool success;
+  FILE *fp = fopen("/home/kali/ics2024/nemu/tools/gen-expr/input", "r");
+  char e[65536] = {};
+  word_t result;
+  while(fscanf(fp, "%d %s",&result, e) != EOF) {
+    word_t my_result = expr(e, &success);
+    assert(my_result==result);
   }
   return 0;
 }

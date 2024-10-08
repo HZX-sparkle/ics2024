@@ -31,8 +31,28 @@ static char *code_format =
 "  return 0; "
 "}";
 
+static void gen_num() {
+  char temp[32]= "";
+  snprintf(temp, 32, "%d", rand());
+  strcat(buf, temp);
+}
+
+static void gen(char c) {
+  char c_str[2]={c,0};
+  strcat(buf,c_str);
+}
+
+static void gen_rand_op() {
+  char op[] = {'+', '-', '*', '/'};
+  gen(op[rand()%4]);
+}
+
 static void gen_rand_expr() {
-  buf[0] = '\0';
+  switch (rand()%3) {
+    case 0: gen_num(); break;
+    case 1: gen('('); gen_rand_expr(); gen(')'); break;
+    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+  }
 }
 
 int main(int argc, char *argv[]) {
@@ -44,8 +64,10 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
+    buf[0] = '\0';
     gen_rand_expr();
 
+    // printf("%s\n", buf);
     sprintf(code_buf, code_format, buf);
 
     FILE *fp = fopen("/tmp/.code.c", "w");
