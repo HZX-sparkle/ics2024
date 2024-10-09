@@ -172,7 +172,7 @@ static bool check_parentheses(int p, int q) {
   return true;
 }
 
-static word_t eval(int p, int q) {
+static int eval(int p, int q) {
   // printf("%d %d\n", p, q);
   if (p > q) {
     /* Bad expression or --2 situation */
@@ -186,7 +186,7 @@ static word_t eval(int p, int q) {
     * Return the value of the number.
     */
     // printf("%s\n", tokens[p].str);
-    word_t val = strtoul(tokens[p].str, NULL, 0);
+    int val = atoi(tokens[p].str);
     // printf("%d\n", val);
     return val;
   }
@@ -244,8 +244,8 @@ static word_t eval(int p, int q) {
     printf("main op: %c, position: %d\n", tokens[op].type, op);
     
     // 2. Get the value of two parts splited by op.
-    word_t val1 = eval(p, op - 1 );
-    word_t val2 = eval(op + 1, q);
+    int val1 = eval(p, op - 1 );
+    int val2 = eval(op + 1, q);
     switch (op_type)
     {
       case '+':
@@ -260,7 +260,7 @@ static word_t eval(int p, int q) {
       
       case '/':
         if (val2 == 0) {
-          printf("divided by 0\n");
+          printf("division by 0\n");
           assert(0);
         }
         return val1/val2;

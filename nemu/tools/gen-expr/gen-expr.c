@@ -26,14 +26,14 @@ static char code_buf[65536 + 128] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
 "int main() { "
-"  unsigned result = (unsigned int)%s; "
+"  unsigned result = %s; "
 "  printf(\"%%u\", result); "
 "  return 0; "
 "}";
 
 static void gen_num() {
   char temp[32]= "";
-  snprintf(temp, 32, "%uU", rand()%100);
+  snprintf(temp, 32, "%u", rand()%100);
   strcat(buf, temp);
 }
 
@@ -86,8 +86,8 @@ int main(int argc, char *argv[]) {
     fp = popen("/tmp/.expr", "r");
     assert(fp != NULL);
 
-    uint32_t result;
-    ret = fscanf(fp, "%u", &result);
+    int result;
+    ret = fscanf(fp, "%d", &result);
     pclose(fp);
 
     printf("%u %s\n", result, buf);
