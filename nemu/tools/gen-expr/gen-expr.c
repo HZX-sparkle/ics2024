@@ -33,7 +33,7 @@ static char *code_format =
 
 static void gen_num() {
   char temp[32]= "";
-  snprintf(temp, 32, "%u", rand()%100);
+  snprintf(temp, 32, "%u", rand());
   strcat(buf, temp);
 }
 
@@ -48,7 +48,7 @@ static void gen_rand_op() {
 }
 
 static void gen_rand_expr() {
-  if(strlen(buf)>50){
+  if(strlen(buf)>300){
     gen_num();
     return;
   }

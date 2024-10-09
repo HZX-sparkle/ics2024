@@ -203,6 +203,7 @@ static int eval(int p, int q) {
     int i;
     int op = -1;
     int op_type = -1;
+    // int op_prec;
     for ( i = q; i >= p; i--)
     {
       switch (tokens[i].type)
