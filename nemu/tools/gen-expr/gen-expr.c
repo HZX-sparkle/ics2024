@@ -33,7 +33,7 @@ static char *code_format =
 
 static void gen_num() {
   char temp[32]= "";
-  snprintf(temp, 32, "%u", rand());
+  snprintf(temp, 32, "%uU", rand());
   strcat(buf, temp);
 }
 

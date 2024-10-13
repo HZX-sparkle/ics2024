@@ -46,7 +46,7 @@ static struct rule {
   {"==", TK_EQ},              // equal
   {"\\$[0-9a-z]+", TK_REG},   // register
   {"0x[0-9a-fA-F]+", TK_HEX}, // heximal
-  {"[0-9]+", TK_DEC},         // decimal
+  {"[0-9]+(U)?", TK_DEC},         // decimal
 
 };
 
@@ -172,7 +172,7 @@ static bool check_parentheses(int p, int q) {
   return true;
 }
 
-static int eval(int p, int q) {
+static word_t eval(int p, int q) {
   // printf("%d %d\n", p, q);
   if (p > q) {
     /* Bad expression or --2 situation */
@@ -186,7 +186,7 @@ static int eval(int p, int q) {
     * Return the value of the number.
     */
     // printf("%s\n", tokens[p].str);
-    int val = atoi(tokens[p].str);
+    word_t val = strtoul(tokens[p].str, NULL, 0);
     // printf("%d\n", val);
     return val;
   }
@@ -245,8 +245,8 @@ static int eval(int p, int q) {
     printf("main op: %c, position: %d\n", tokens[op].type, op);
     
     // 2. Get the value of two parts splited by op.
-    int val1 = eval(p, op - 1 );
-    int val2 = eval(op + 1, q);
+    word_t val1 = eval(p, op - 1 );
+    word_t val2 = eval(op + 1, q);
     switch (op_type)
     {
       case '+':
