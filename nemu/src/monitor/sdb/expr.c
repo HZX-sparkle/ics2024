@@ -19,9 +19,10 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include <memory/vaddr.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_REG, TK_HEX, TK_DEC
+  TK_NOTYPE = 256, TK_EQ, TK_REG, TK_HEX, TK_DEC, TK_UE, TK_AND, DEREF
 
   /* TODO: Add more token types */
 
@@ -44,9 +45,11 @@ static struct rule {
   {"\\(", '('},               // parentheses
   {"\\)", ')'},               // back parentheses
   {"==", TK_EQ},              // equal
+  {"!=", TK_UE},              // unequal
+  {"&&", TK_AND},             // and
   {"\\$[0-9a-z]+", TK_REG},   // register
   {"0x[0-9a-fA-F]+", TK_HEX}, // heximal
-  {"[0-9]+(U)?", TK_DEC},         // decimal
+  {"[0-9]+(U)?", TK_DEC},     // decimal
 
 };
 
@@ -109,14 +112,8 @@ static bool make_token(char *e) {
           case '/': tokens[nr_token++].type = '/'; break;
           case '+': tokens[nr_token++].type = '+'; break;
           case '-': tokens[nr_token++].type = '-'; break;
-          case '(': 
-            strcpy(tokens[nr_token].str, "(");
-            tokens[nr_token++].type = '('; 
-            break;
-          case ')': 
-            strcpy(tokens[nr_token].str, ")");
-            tokens[nr_token++].type = ')'; 
-            break;
+          case '(': tokens[nr_token++].type = '('; break;
+          case ')': tokens[nr_token++].type = ')'; break;
           case TK_DEC: {
             if(substr_len > 32) {
               printf("substr too long at position %d\n", position - substr_len);
@@ -203,7 +200,7 @@ static word_t eval(int p, int q) {
     int i;
     int op = -1;
     int op_type = -1;
-    // int op_prec;
+    int op_prec = 256;
     for ( i = q; i >= p; i--)
     {
       switch (tokens[i].type)
@@ -218,20 +215,46 @@ static word_t eval(int p, int q) {
             else if (tokens[i].type == '(') cnt--;
           }
           continue;
-        
-        case '+': case '-':
+
+        case TK_AND:
           op = i;
           op_type = tokens[i].type;
+          op_prec = 0;
           break;
-        
-        case '*': case '/':
-          if( op == -1 ){
+
+        case TK_EQ: case TK_UE:
+          if(op_prec > 1) {
             op = i;
             op_type = tokens[i].type;
+            op_prec = 1;
+          }
+          continue;
+        
+        case '+': case '-':
+          if(op_prec > 2) {
+            op = i;
+            op_type = tokens[i].type;
+            op_prec = 2;
+          }
+          continue;
+        
+        case '*': case '/':
+          if(op_prec > 3) {
+            op = i;
+            op_type = tokens[i].type;
+            op_prec = 3;
           }
           continue;
 
-        case TK_DEC:
+        case DEREF:
+          if(op_prec > 4) {
+            op = i;
+            op_type = tokens[i].type;
+            op_prec = 4;
+          }
+          continue;
+
+        case TK_DEC: case TK_HEX:
           continue;
 
         default:
@@ -242,33 +265,49 @@ static word_t eval(int p, int q) {
       break;
     }
 
-    printf("main op: %c, position: %d\n", tokens[op].type, op);
+    // printf("main op: %c, position: %d\n", tokens[op].type, op);
     
     // 2. Get the value of two parts splited by op.
-    word_t val1 = eval(p, op - 1 );
-    word_t val2 = eval(op + 1, q);
-    switch (op_type)
+    if(op_type != DEREF)
     {
-      case '+':
-        return val1+val2;
-        break;
+      word_t val1 = eval(p, op - 1 );
+      word_t val2 = eval(op + 1, q);
+      switch (op_type)
+      {
+        case '+':
+          return val1+val2;
+          break;
 
-      case '-':
-        return val1-val2;
+        case '-':
+          return val1-val2;
 
-      case '*':
-        return val1*val2;
-      
-      case '/':
-        if (val2 == 0) {
-          printf("division by 0\n");
-          assert(0);
-        }
-        return val1/val2;
+        case '*':
+          return val1*val2;
+        
+        case '/':
+          if (val2 == 0) {
+            printf("division by 0\n");
+            assert(0);
+          }
+          return val1/val2;
 
-      default:
-        break;
+        case TK_AND:
+          return val1 && val2;
+
+        case TK_EQ:
+          return val1 == val2;
+
+        case TK_UE:
+          return val1 != val2;
+
+        default:
+          break;
+      }
     }
+    vaddr_t val = eval(op+1, q);
+    word_t ret = vaddr_read(val, 4);
+    printf("0x%x\n", ret);
+    return ret;
   }
   assert(0);
   return 0;
@@ -312,6 +351,12 @@ word_t expr(char *e, bool *success) {
   // printf("\n");
   
   // printf("e: %s\n", e);
+
+  for (int i = 0; i < nr_token; i ++) {
+    if (tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type != TK_DEC && tokens[i - 1].type != TK_HEX && tokens[i - 1].type != ')') ) ) {
+      tokens[i].type = DEREF;
+    }
+  }
   return eval(0, nr_token-1);
 
 }

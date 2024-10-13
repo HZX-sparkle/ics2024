@@ -64,6 +64,8 @@ static int cmd_x(char *args);
 
 static int cmd_test(char *args);
 
+static int cmd_p(char *args);
+
 
 static struct {
   const char *name;
@@ -78,8 +80,8 @@ static struct {
   { "si", "Step one instruction exactly.", cmd_si },
   { "info", "Display program status", cmd_info },
   { "x", "Examine memory", cmd_x },
-  { "test", "Test your functions", cmd_test}
-  // { "p EXPR", "Expression evaluation", cmd_p },
+  { "test", "Test your functions", cmd_test},
+  { "p", "Expression evalution", cmd_p},
   // { "w EXPR", "Set watchpoint", cmd_w },
   // { "d EXPR", "Delete watchpoint", cmd_w },
 };
@@ -180,6 +182,13 @@ static int cmd_test(char *args) {
     printf("my result: %u\n", my_result);
     assert(my_result==result);
   }
+  return 0;
+}
+
+static int cmd_p(char *args) {
+  bool success;
+  word_t ret = expr(args, &success);
+  printf("%u", ret);
   return 0;
 }
 
