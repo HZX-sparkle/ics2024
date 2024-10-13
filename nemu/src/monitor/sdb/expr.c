@@ -127,6 +127,19 @@ static bool make_token(char *e) {
             nr_token++;
             break;
           }
+          case TK_HEX: {
+            if(substr_len > 32) {
+              printf("substr too long at position %d\n", position - substr_len);
+              assert(0);
+              return false;
+            }
+            tokens[nr_token].type = TK_HEX;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            tokens[nr_token].str[substr_len] = 0;
+
+            nr_token++;
+            break;
+          }
           default: break;
         }
 
