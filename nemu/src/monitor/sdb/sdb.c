@@ -188,7 +188,7 @@ static int cmd_test(char *args) {
 static int cmd_p(char *args) {
   bool success;
   word_t ret = expr(args, &success);
-  printf("%u", ret);
+  printf("%u\n", ret);
   return 0;
 }
 
