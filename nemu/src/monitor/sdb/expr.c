@@ -22,7 +22,7 @@
 #include <memory/vaddr.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_REG, TK_HEX, TK_DEC, TK_UE, TK_AND, DEREF
+  TK_NOTYPE = 256, TK_EQ, TK_REG, TK_HEX, TK_DEC, TK_UE, TK_AND, DEREF, NEG
 
   /* TODO: Add more token types */
 
@@ -260,7 +260,7 @@ static word_t eval(int p, int q) {
           continue;
 
         case DEREF:
-          if(op_prec > 4) {
+          if(op_prec >= 4) {
             op = i;
             op_type = tokens[i].type;
             op_prec = 4;
@@ -281,7 +281,7 @@ static word_t eval(int p, int q) {
     // printf("main op: %c, position: %d\n", tokens[op].type, op);
     
     // 2. Get the value of two parts splited by op.
-    if(op_type != DEREF)
+    if(op_type != DEREF || op_type != NEG)
     {
       word_t val1 = eval(p, op - 1 );
       word_t val2 = eval(op + 1, q);
@@ -316,11 +316,15 @@ static word_t eval(int p, int q) {
         default:
           break;
       }
+    } else if (op_type == DEREF) {
+      vaddr_t val = eval(op+1, q);
+      word_t ret = vaddr_read(val, 4);
+      // printf("0x%x\n", ret);
+      return ret;
+    } else {
+      word_t val = eval(op+1,q);
+      return -val;
     }
-    vaddr_t val = eval(op+1, q);
-    word_t ret = vaddr_read(val, 4);
-    printf("0x%x\n", ret);
-    return ret;
   }
   assert(0);
   return 0;
@@ -333,41 +337,13 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  // int cnt=1;
-  // for (int i = 1; i < nr_token; i++)
-  // {
-  //   if( tokens[i].type == '-' && tokens[i-1].type != TK_DEC && tokens[i-1].type != ')' ) {
-  //     tokens[i].type = TK_NOTYPE;
-  //     cnt*=-1;
-  //   }
-  //   if(cnt==-1&& (tokens[i].type=='(' || tokens[i].type==TK_DEC)) {
-  //     char str[32]="-";
-  //     strcat(str, tokens[i].str);
-  //     strcpy(tokens[i].str, str);
-  //     cnt=1;  
-  //   }
-  // }
-  
-  // int j = 0;
-  // for (int i = 0; i < nr_token; i++)
-  // {
-  //   if(tokens[i].type != TK_NOTYPE) {
-  //     tokens[j] = tokens[i];
-  //     j++;
-  //   }
-  // }
-  // nr_token = j;
-
-  // for(int i=0;i<nr_token;i++){
-  //   if(tokens[i].type == TK_DEC) printf("%s ", tokens[i].str);
-  // }
-  // printf("\n");
-  
-  // printf("e: %s\n", e);
 
   for (int i = 0; i < nr_token; i ++) {
     if (tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type != TK_DEC && tokens[i - 1].type != TK_HEX && tokens[i - 1].type != ')') ) ) {
       tokens[i].type = DEREF;
+    }
+    if (tokens[i].type == '-' && (i == 0 || (tokens[i - 1].type != TK_DEC && tokens[i - 1].type != TK_HEX && tokens[i - 1].type != ')') ) ) {
+      tokens[i].type = NEG;
     }
   }
   return eval(0, nr_token-1);

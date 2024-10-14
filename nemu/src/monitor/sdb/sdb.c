@@ -154,8 +154,7 @@ static int cmd_x(char *args) {
     int n = atoi(arg1);
     bool success = true;
     // vaddr_t addr = expr(arg2, &success);
-    char* endptr;
-    vaddr_t addr = strtol(arg2, &endptr, 16);
+    vaddr_t addr = strtoul(arg2, NULL, 16);
     if ( success ) 
     {
       printf("%-20s %-20s\n", "Address", "Value");
