@@ -176,7 +176,7 @@ static int cmd_test(char *args) {
   word_t result;
   while(fscanf(fp, "%u %s",&result, e) != EOF) {
     word_t my_result = expr(e, &success);
-    Assert(my_result==result, "In the expression %s\nThe answer is %u, while my result is %u", e, result, my_result);
+    Assert(my_result==result, "For the expression %s\nThe answer is %u, while my result is %u", e, result, my_result);
   }
   return 0;
 }

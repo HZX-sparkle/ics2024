@@ -208,14 +208,13 @@ static word_t eval(int p, int q) {
     * For now this token should be a number.
     * Return the value of the number.
     */
-    // printf("%s\n", tokens[p].str);
     if( tokens[p].type != TK_REG ) {
       word_t val = strtoul(tokens[p].str, NULL, 0);
       // printf("%u\n", val);
       return val;
     }
-    bool success;
-    word_t val = isa_reg_str2val( tokens[p].str, &success);
+    bool success = true;
+    word_t val = isa_reg_str2val(tokens[p].str, &success);
     if (!success) panic("Cannot find the register");
     return val;
     
@@ -287,7 +286,7 @@ static word_t eval(int p, int q) {
           }
           continue;
 
-        case TK_DEC: case TK_HEX:
+        case TK_DEC: case TK_HEX: case TK_REG:
           continue;
 
         default:
@@ -319,8 +318,7 @@ static word_t eval(int p, int q) {
         
         case '/':
           if (val2 == 0) {
-            printf("division by 0\n");
-            assert(0);
+            panic("Division by 0");
           }
           return val1/val2;
 
