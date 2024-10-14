@@ -47,7 +47,7 @@ static struct rule {
   {"==", TK_EQ},              // equal
   {"!=", TK_UE},              // unequal
   {"&&", TK_AND},             // and
-  {"\\$[0-9a-z]+", TK_REG},   // register
+  {"\\$[$0-9a-z]+", TK_REG},   // register
   {"0x[0-9a-fA-F]+", TK_HEX}, // heximal
   {"[0-9]+(U)?", TK_DEC},     // decimal
 
