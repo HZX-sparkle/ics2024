@@ -182,7 +182,7 @@ static int cmd_test(char *args) {
 }
 
 static int cmd_p(char *args) {
-  bool success;
+  bool success = true;
   word_t ret = expr(args, &success);
   if (!success)
   {
