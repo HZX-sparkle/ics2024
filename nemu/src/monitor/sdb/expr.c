@@ -140,6 +140,19 @@ static bool make_token(char *e) {
             nr_token++;
             break;
           }
+          case TK_REG: {
+            if(substr_len > 32) {
+              printf("substr too long at position %d\n", position - substr_len);
+              assert(0);
+              return false;
+            }
+            tokens[nr_token].type = TK_REG;
+            strncpy(tokens[nr_token].str, substr_start + 1, substr_len - 1);
+            tokens[nr_token].str[substr_len - 1] = 0;
+
+            nr_token++;
+            break;
+          }
           default: break;
         }
 
@@ -196,9 +209,16 @@ static word_t eval(int p, int q) {
     * Return the value of the number.
     */
     // printf("%s\n", tokens[p].str);
-    word_t val = strtoul(tokens[p].str, NULL, 0);
-    // printf("%u\n", val);
+    if( tokens[p].type != TK_REG ) {
+      word_t val = strtoul(tokens[p].str, NULL, 0);
+      // printf("%u\n", val);
+      return val;
+    }
+    bool success;
+    word_t val = isa_reg_str2val( tokens[p].str, &success);
+    if (!success) panic("Cannot find the register");
     return val;
+    
   }
   else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
@@ -339,10 +359,10 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
 
   for (int i = 0; i < nr_token; i ++) {
-    if (tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type != TK_DEC && tokens[i - 1].type != TK_HEX && tokens[i - 1].type != ')') ) ) {
+    if (tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type != TK_DEC && tokens[i - 1].type != TK_HEX && tokens[i - 1].type != TK_REG && tokens[i - 1].type != ')') ) ) {
       tokens[i].type = DEREF;
     }
-    if (tokens[i].type == '-' && (i == 0 || (tokens[i - 1].type != TK_DEC && tokens[i - 1].type != TK_HEX && tokens[i - 1].type != ')') ) ) {
+    if (tokens[i].type == '-' && (i == 0 || (tokens[i - 1].type != TK_DEC && tokens[i - 1].type != TK_HEX && tokens[i - 1].type != TK_REG && tokens[i - 1].type != ')') ) ) {
       tokens[i].type = NEG;
     }
   }

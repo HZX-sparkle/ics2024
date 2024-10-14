@@ -176,10 +176,7 @@ static int cmd_test(char *args) {
   word_t result;
   while(fscanf(fp, "%u %s",&result, e) != EOF) {
     word_t my_result = expr(e, &success);
-    printf("%s\n", e);
-    printf("result: %u\n", result);
-    printf("my result: %u\n", my_result);
-    assert(my_result==result);
+    Assert(my_result==result, "In the expression %s\nThe answer is %u, while my result is %u", e, result, my_result);
   }
   return 0;
 }
@@ -187,6 +184,11 @@ static int cmd_test(char *args) {
 static int cmd_p(char *args) {
   bool success;
   word_t ret = expr(args, &success);
+  if (!success)
+  {
+    panic("Error with your expression!");
+  }
+  
   printf("%u\n", ret);
   return 0;
 }
