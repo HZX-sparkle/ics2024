@@ -277,7 +277,7 @@ static word_t eval(int p, int q) {
           }
           continue;
 
-        case DEREF:
+        case DEREF: case NEG:
           if(op_prec >= 4) {
             op = i;
             op_type = tokens[i].type;
@@ -298,7 +298,7 @@ static word_t eval(int p, int q) {
     Log("main op: %c, position: %d", tokens[op].type, op);
     
     // 2. Get the value of two parts splited by op.
-    if(op_type != DEREF || op_type != NEG)
+    if(op_type != DEREF && op_type != NEG)
     {
       word_t val1 = eval(p, op - 1 );
       word_t val2 = eval(op + 1, q);
