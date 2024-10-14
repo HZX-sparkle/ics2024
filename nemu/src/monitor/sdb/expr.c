@@ -196,7 +196,7 @@ static bool check_parentheses(int p, int q) {
 }
 
 static word_t eval(int p, int q) {
-  // printf("%d %d\n", p, q);
+  Log("%d %d", p, q);
   if (p > q) {
     /* Bad expression or --2 situation */
     if( q < 0 ) return 0;
@@ -295,7 +295,7 @@ static word_t eval(int p, int q) {
       break;
     }
 
-    Log("main op: %c, position: %d\n", tokens[op].type, op);
+    Log("main op: %c, position: %d", tokens[op].type, op);
     
     // 2. Get the value of two parts splited by op.
     if(op_type != DEREF || op_type != NEG)
@@ -338,7 +338,7 @@ static word_t eval(int p, int q) {
       // printf("0x%x\n", ret);
       return ret;
     } else {
-      word_t val = eval(op+1,q);
+      word_t val = eval(op+1, q);
       return -val;
     }
   }
