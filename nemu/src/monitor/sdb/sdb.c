@@ -186,7 +186,7 @@ static int cmd_p(char *args) {
   word_t ret = expr(args, &success);
   if (!success)
   {
-    panic("Error with your expression!");
+    panic("Error with your expression: %s", args);
   }
   
   printf("%u\n", ret);
