@@ -289,14 +289,13 @@ static word_t eval(int p, int q) {
           continue;
 
         default:
-          printf("Bad expression: cannot match the token: %s\n", tokens[i].str);
-          assert(0);
+          panic("Bad expression: cannot match the token: %s", tokens[i].str);
       }
       
       break;
     }
 
-    // printf("main op: %c, position: %d\n", tokens[op].type, op);
+    Log("main op: %c, position: %d\n", tokens[op].type, op);
     
     // 2. Get the value of two parts splited by op.
     if(op_type != DEREF || op_type != NEG)
