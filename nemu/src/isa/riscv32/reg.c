@@ -27,7 +27,7 @@ void isa_reg_display() {
   printf("%-5s %-10s\n", "Name", "Value");
   for (size_t i = 0; i < 32; i++)
   {
-    printf("%-5s %-s%x\n", regs[i], "0x", cpu.gpr[i]);
+    printf("%-5s %-s%x\n", reg_name(i), "0x", gpr(i));
   }
   
 }
@@ -35,10 +35,10 @@ void isa_reg_display() {
 word_t isa_reg_str2val(const char *s, bool *success) {
   for (size_t i = 0; i < 32; i++)
   {
-    if (strcmp(s, regs[i]) == 0)
+    if (strcmp(s, reg_name(i)) == 0)
     {
       *success = true;
-      return cpu.gpr[i];
+      return gpr(i);
     }
   }
   *success = false;
