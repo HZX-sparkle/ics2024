@@ -79,8 +79,8 @@ void delete_wp(int n) {
     printf("N out of bound.\n");
     return;
   }
-  WP wp = wp_pool[n];
-  free_wp(&wp);
+  WP *wp = &wp_pool[n];
+  free_wp(wp);
 }
 
 void check_wp() {
