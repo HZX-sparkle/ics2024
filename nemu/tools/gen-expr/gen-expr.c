@@ -48,7 +48,7 @@ static void gen_rand_op() {
 }
 
 static void gen_rand_expr() {
-  if(strlen(buf)>300){
+  if(strlen(buf)>200){
     gen_num();
     return;
   }

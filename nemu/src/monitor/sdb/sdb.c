@@ -66,6 +66,10 @@ static int cmd_test(char *args);
 
 static int cmd_p(char *args);
 
+static int cmd_w(char *args);
+
+static int cmd_d(char *args);
+
 
 static struct {
   const char *name;
@@ -82,8 +86,8 @@ static struct {
   { "x", "Examine memory", cmd_x },
   { "test", "Test your functions", cmd_test},
   { "p", "Expression evalution", cmd_p},
-  // { "w EXPR", "Set watchpoint", cmd_w },
-  // { "d EXPR", "Delete watchpoint", cmd_w },
+  { "w", "Set watchpoint", cmd_w },
+  { "d", "Delete watchpoint", cmd_d },
 };
 
 #define NR_CMD ARRLEN(cmd_table)
@@ -133,8 +137,8 @@ static int cmd_info(char *args) {
     printf("info w -- List of watchpoints.\n" );
   } else {
     switch ( *arg ) {
-      case 'r' : isa_reg_display();break;
-      case 'w' : 
+      case 'r' : isa_reg_display(); break;
+      case 'w' : display_wp(); break;
       default : printf("Unknown command '%s'\n", arg);
     }
   }
@@ -182,14 +186,51 @@ static int cmd_test(char *args) {
 }
 
 static int cmd_p(char *args) {
+  if (args == NULL) {
+    printf("Usage: p EXPR\n");
+    return 0;
+  }
   bool success = true;
   word_t ret = expr(args, &success);
-  if (!success)
-  {
-    panic("Error with your expression: %s", args);
+  if (!success) {
+    printf("Invalid expression: %s\n", args);
+    return 0;
   }
-  
   printf("%u\n", ret);
+  return 0;
+}
+
+static int cmd_w(char *args) {
+#ifdef CONFIG_WATCHPOINT
+  if( args == NULL ) {
+    printf("Usage: w EXPR\n");
+    return 0;
+  }
+  bool success = true;
+  word_t val = expr(args, &success);
+  if(!success) {
+    printf("Invalid expression: %s", args);
+    return 0;
+  }
+  set_wp(args, val);
+#else
+  printf("Watchpoints not enabled\n");
+#endif
+  return 0;
+}
+
+static int cmd_d(char *args) {
+#ifdef CONFIG_WATCHPOINT
+  char *arg = strtok(NULL, " ");
+  if( arg == NULL) {
+    printf("Usage: d N\n");
+    return 0;
+  }
+  int n = strtol(arg, NULL, 10);
+  delete_wp(n);
+#else
+  printf("Watchpoints not enabled\n");
+#endif
   return 0;
 }
 
