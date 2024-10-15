@@ -116,5 +116,6 @@ void display_wp() {
   printf("%-8s%-15s%s\n", "Num", "Type", "What");
   while (wp != NULL) {
     printf("%-8d%-15s%s\n", wp->NO, "watchpoint", wp->expr);
+    wp = wp->next;
   }
 }
