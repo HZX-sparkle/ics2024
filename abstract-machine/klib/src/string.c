@@ -15,7 +15,7 @@ char *strcpy(char *dst, const char *src) {
     char c = *src++;
     *p = c;
     p++;
-    if(c == '\0') break;
+    if(!c) break;
   }
   return dst;
   // panic("Not implemented");
@@ -27,13 +27,9 @@ char *strncpy(char *dst, const char *src, size_t n) {
 
 char *strcat(char *dst, const char *src) {
   char *p = dst;
-  while (!*p++);
-  while (1)
-  {
-    char c = *src++;
-    *p = c;
-    if(c == '\0') break;
-  }
+  while(!*p) p++;
+  while(!*src) *p++ = *src++;
+  *p = 0;
   return dst;
   // panic("Not implemented");
 }
