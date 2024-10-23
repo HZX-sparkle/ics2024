@@ -9,6 +9,7 @@ size_t strlen(const char *s) {
 }
 
 char *strcpy(char *dst, const char *src) {
+  printf("strcpy\n");
   char *p = dst;
   while(!*src) *p++ = *src++;
   *p = 0;
@@ -21,6 +22,7 @@ char *strncpy(char *dst, const char *src, size_t n) {
 }
 
 char *strcat(char *dst, const char *src) {
+  printf("strcat\n");
   char *p = dst;
   while(!*p) p++;
   while(!*src) *p++ = *src++;
@@ -30,6 +32,7 @@ char *strcat(char *dst, const char *src) {
 }
 
 int strcmp(const char *s1, const char *s2) {
+  printf("strcmp\n");
   while (1)
   {
     char c1 = *s1++;
@@ -45,6 +48,7 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 }
 
 void *memset(void *s, int c, size_t n) {
+  printf("memset\n");
   unsigned char* p = s;
   unsigned char cc = (unsigned char)c;
   for (size_t i = 0; i < n; i++, p++)
@@ -63,6 +67,7 @@ void *memcpy(void *out, const void *in, size_t n) {
 }
 
 int memcmp(const void *s1, const void *s2, size_t n) {
+  printf("memcmp\n");
   while (n--)
   {
     unsigned char c1 = *(unsigned char*)s1;
