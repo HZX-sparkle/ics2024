@@ -9,7 +9,15 @@ size_t strlen(const char *s) {
 }
 
 char *strcpy(char *dst, const char *src) {
-  panic("Not implemented");
+  char *p = dst;
+  while(1)
+  {
+    char c = *src++;
+    *p = c;
+    p++;
+    if(c == '\0') break;
+  }
+  return dst;
 }
 
 char *strncpy(char *dst, const char *src, size_t n) {
@@ -17,7 +25,9 @@ char *strncpy(char *dst, const char *src, size_t n) {
 }
 
 char *strcat(char *dst, const char *src) {
-  panic("Not implemented");
+  // char *p = dst;
+  // while (!*p++);
+  return 0;
 }
 
 int strcmp(const char *s1, const char *s2) {
