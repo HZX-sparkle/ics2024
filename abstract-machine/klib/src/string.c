@@ -10,8 +10,7 @@ size_t strlen(const char *s) {
 
 char *strcpy(char *dst, const char *src) {
   char *p = dst;
-  while(!*src) *p++ = *src++;
-  *p = 0;
+  while ((*p++ = *src++));
   return dst;
   // panic("Not implemented");
 }
