@@ -45,7 +45,7 @@ int sprintf(char *out, const char *fmt, ...) {
         break;
       
       case 's':
-        char* s = va_arg(args, char*);
+        const char* s = va_arg(args, const char*);
         while (*s) out[len++] = *s++;
         break;
 
