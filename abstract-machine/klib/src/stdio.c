@@ -54,7 +54,7 @@ int sprintf(char *out, const char *fmt, ...) {
         out[len++] = *p;
         break;
       }
-    } else out[len] = *p;
+    } else out[len++] = *p;
     p++;
   }
   out[len] = 0;
