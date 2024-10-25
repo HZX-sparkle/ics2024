@@ -17,44 +17,50 @@ int sprintf(char *out, const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
   const char *p = fmt;
-  char *dst = out;
+  int len = 0;
   while (*p)
   {
-    if(*p == '%')
+    if (*p == '%')
     {
       switch (*++p)
       {
       case 'd':
         int val = va_arg(args, int);
-        char buf[20];
+        char buf[20] = {0};
         int i = 0;
-        if (val < 0)
+        if (val<0)
         {
-          *dst++ = '-';
+          out[len++] = '-';
           val = -val;
         }
+        
         do
         {
           buf[i++] = val%10 + '0';
           val /= 10;
-        } while (val != 0);
-        for (i = i - 1; i >=0 ; i--) *dst++ = buf[i];
+        } while (val);
+
+        while (i) out[len++] = buf[--i];
+
         break;
       
       case 's':
-        char *s = va_arg(args, char*);
-        while((*dst++ = *s++));
+        char* s = va_arg(args, char*);
+        while (*s) out[len++] = *s++;
         break;
 
       default:
-        *dst++ = '%';
-        *dst++ = *p;
+        out[len++] = '%';
+        out[len++] = *p;
         break;
       }
-    } else *dst++ = *p;
+    } else out[len] = *p;
     p++;
   }
-  return dst-out;
+  out[len] = 0;
+  va_end(args);
+  return len;
+
   // panic("Not implemented");
 }
 
