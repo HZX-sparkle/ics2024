@@ -17,7 +17,6 @@ int sprintf(char *out, const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
   const char *p = fmt;
-  out[0] = 0;
   int len = 0;
   while (*p)
   {
