@@ -22,7 +22,7 @@ int sprintf(char *out, const char *fmt, ...) {
   {
     if (*p == '%')
     {
-      switch (*++p)
+      switch (*(++p))
       {
       case 'd':
         int val = va_arg(args, int);
