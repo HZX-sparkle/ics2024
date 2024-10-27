@@ -40,6 +40,8 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
   IFDEF(CONFIG_WATCHPOINT, check_wp());
+  // iringbuf: store instructions.
+  TODO();
 }
 
 static void exec_once(Decode *s, vaddr_t pc) {
@@ -124,6 +126,8 @@ void cpu_exec(uint64_t n) {
            (nemu_state.halt_ret == 0 ? ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) :
             ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED))),
           nemu_state.halt_pc);
+      // iringbuf: print instructions.
+      TODO();
       // fall through
     case NEMU_QUIT: statistic();
   }
