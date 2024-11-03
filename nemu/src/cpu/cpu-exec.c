@@ -50,6 +50,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
   IFDEF(CONFIG_WATCHPOINT, check_wp());
   // iringbuf: store instructions.
+  assert(0);
   IFDEF(CONFIG_ITRACE, store_inst(_this->logbuf));
 }
 
