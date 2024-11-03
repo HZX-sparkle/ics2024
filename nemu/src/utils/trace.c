@@ -8,7 +8,7 @@ int begin, cur = 0;
 
 void store_inst(char *buf)
 {
-    strcpy(iringbuf[cur], buf);
+    strncpy(iringbuf[cur], buf, 1);
     assert(0);
     cur = (cur + 1) % MAX_INST;
     if (cur == begin)
