@@ -12,7 +12,7 @@ int begin, cur = 0;
 void store_inst(char *buf)
 {
     strncpy(iringbuf[cur], buf, MAX_INST_SIZE - 1);
-    assert(0);
+    // assert(0);
     iringbuf[cur][MAX_INST_SIZE - 1] = 0;
     cur = (cur + 1) % MAX_INST;
     if (cur == begin)
