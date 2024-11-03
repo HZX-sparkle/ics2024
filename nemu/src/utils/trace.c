@@ -25,5 +25,6 @@ void display_inst()
     while (index != cur)
     {
         printf(((index + 1) % MAX_INST == cur) ? " -->%s\n" : "    %s\n", iringbuf[index]);
+        index = (index + 1) % MAX_INST;
     }
 }
