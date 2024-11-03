@@ -21,7 +21,9 @@ void store_inst(char *buf)
 
 void display_inst()
 {
-    for (int i = 0; i != cur; i = (i + 1) % MAX_INST)
-        printf("    %s\n", iringbuf[i]);
-    printf(" -->%s\n", iringbuf[cur]);
+    int index = begin;
+    while (index != cur)
+    {
+        printf(((index + 1) % MAX_INST == cur) ? " -->%s\n" : "    %s\n", iringbuf[index]);
+    }
 }
