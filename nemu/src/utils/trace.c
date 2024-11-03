@@ -2,13 +2,13 @@
 
 #define MAX_INST 15
 
-char *iringbuf[MAX_INST];
+char *iringbuf[MAX_INST] = {0};
 
 int begin, cur = 0;
 
 void store_inst(char *buf)
 {
-    strncpy(iringbuf[cur], buf, 1);
+    strcpy(iringbuf[cur], buf);
     assert(0);
     cur = (cur + 1) % MAX_INST;
     if (cur == begin)
