@@ -24,9 +24,7 @@ void display_inst()
     int index = begin;
     while (index != cur)
     {
-        printf(((index + 1) % MAX_INST == cur) ? " --> " : "     "
-                                                           "%s\n",
-               iringbuf[index]);
+        printf(((index + 1) % MAX_INST == cur) ? " --> %s\n" : "     %s\n", iringbuf[index]);
         index = (index + 1) % MAX_INST;
     }
 }
