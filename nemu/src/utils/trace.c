@@ -28,3 +28,17 @@ void display_inst()
         index = (index + 1) % MAX_INST;
     }
 }
+
+void mtrace_read(paddr_t addr, int len)
+{
+    printf("r: addr = " FMT_PADDR ","
+           " len = %d\n",
+           addr, len);
+}
+
+void mtrace_write(paddr_t addr, int len, word_t data)
+{
+    printf("w: addr = " FMT_PADDR ","
+           " len = %d, data = " FMT_WORD "\n",
+           addr, len, data);
+}
