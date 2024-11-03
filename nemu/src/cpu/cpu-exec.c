@@ -51,6 +51,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
   IFDEF(CONFIG_WATCHPOINT, check_wp());
   // iringbuf: store instructions.
   IFDEF(CONFIG_ITRACE, store_inst(_this->logbuf));
+  panic("test");
 }
 
 static void exec_once(Decode *s, vaddr_t pc)
