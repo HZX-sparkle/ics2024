@@ -81,13 +81,13 @@ void init_elf(const char *elf_file)
     Elf32_Shdr shstrtab_hdr = shdr[ehdr.e_shstrndx];
     char *shstrtab = malloc(shstrtab_hdr.sh_size);
     // set fp to section header string table
-    assert(0);
     fseek(elf_fp, shstrtab_hdr.sh_offset, SEEK_SET);
     Assert(fread(shstrtab, shstrtab_hdr.sh_size, 1, elf_fp) == 1, "Cannot read seciton header string table");
 
     // find .strtab and .symtab
     for (size_t i = 0; i < ehdr.e_shnum; i++)
     {
+        assert(0);
         char *name = &shstrtab[shdr[i].sh_name];
         if (strcmp(name, ".strtab") == 0)
         {
