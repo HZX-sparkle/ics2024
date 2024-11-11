@@ -120,7 +120,7 @@ void gen_fm(word_t count)
         {
             FM* fm = malloc(sizeof(FM));
             char *name = &strtab[sym->st_name];
-            printf("%ld\n", sizeof(name));
+            printf("%s\n", name);
             assert(0);
             strcpy(fm->name, name);
             fm->start = sym->st_value;
