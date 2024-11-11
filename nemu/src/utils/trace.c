@@ -113,8 +113,6 @@ void init_elf(const char *elf_file)
 
 void gen_fm(word_t count)
 {
-    assert(0);
-
     for (size_t i = 0; i < count; i++)
     {
         Elf32_Sym *sym = &symtab[i];
@@ -122,6 +120,8 @@ void gen_fm(word_t count)
         {
             FM* fm = malloc(sizeof(FM));
             char *name = &strtab[sym->st_name];
+    assert(0);
+
             strcpy(fm->name, name);
             fm->start = sym->st_value;
             fm->size = sym->st_size;
