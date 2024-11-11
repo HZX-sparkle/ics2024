@@ -124,7 +124,7 @@ void gen_fm(word_t count)
             {
                 panic("error reading name\n");
             }
-            
+            assert(0);
             strcpy(fm->name, name);
             fm->start = sym->st_value;
             fm->size = sym->st_size;
