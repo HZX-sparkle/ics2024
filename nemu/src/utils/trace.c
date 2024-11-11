@@ -115,16 +115,15 @@ void gen_fm(word_t count)
 {
     for (size_t i = 0; i < count; i++)
     {
-        Elf32_Sym *sym = &symtab[i];
-        if (ELF32_ST_TYPE(sym->st_info) == STT_FUNC)
+        Elf32_Sym sym = symtab[i];
+        if (ELF32_ST_TYPE(sym.st_info) == STT_FUNC)
         {
             FM* fm = malloc(sizeof(FM));
-            char *name = &strtab[sym->st_name];
-            printf("%c\n", *name);
+            char *name = &strtab[sym.st_name];
             assert(0);
             strcpy(fm->name, name);
-            fm->start = sym->st_value;
-            fm->size = sym->st_size;
+            fm->start = sym.st_value;
+            fm->size = sym.st_size;
             fm->next = head;
             head = fm;
         }
