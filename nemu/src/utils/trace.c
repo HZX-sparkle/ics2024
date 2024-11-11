@@ -142,7 +142,7 @@ void gen_fm(word_t count)
 char *match_func(paddr_t addr)
 {
     FM* fm = head;
-    while (!fm)
+    while (fm)
     {
         if(addr >= fm->start && addr < fm->start + fm->size)  return fm->name;
         fm = fm->next;
