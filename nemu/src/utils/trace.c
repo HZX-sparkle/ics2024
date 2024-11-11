@@ -122,6 +122,7 @@ void gen_fm(word_t count)
             char *name = &strtab[sym.st_name];
             if (name != NULL) {
                 // 使用 strncpy 避免缓冲区溢出
+                assert(0);
                 strncpy(fm->name, name, sizeof(fm->name) - 1);
                 fm->name[sizeof(fm->name) - 1] = '\0';  // 确保字符串以 '\0' 结尾
             } else {
