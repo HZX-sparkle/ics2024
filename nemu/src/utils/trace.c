@@ -120,8 +120,13 @@ void gen_fm(word_t count)
         {
             FM* fm = malloc(sizeof(FM));
             char *name = &strtab[sym.st_name];
-            assert(0);
-            strcpy(fm->name, name);
+            if (name != NULL) {
+                // 使用 strncpy 避免缓冲区溢出
+                strncpy(fm->name, name, sizeof(fm->name) - 1);
+                fm->name[sizeof(fm->name) - 1] = '\0';  // 确保字符串以 '\0' 结尾
+            } else {
+                fm->name[0] = '\0';  // 如果没有有效的名称，确保 name 字符串为空
+            }
             fm->start = sym.st_value;
             fm->size = sym.st_size;
             fm->next = head;
