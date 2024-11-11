@@ -48,6 +48,7 @@ static Elf32_Ehdr ehdr;
 static Elf32_Shdr *shdr;
 static Elf32_Sym *symtab;
 static char *strtab;
+static int calls = 0;
 typedef struct func_map
 {
     char name[256];
@@ -137,5 +138,23 @@ char *match_func(paddr_t addr)
         if(addr >= fm->start && addr < fm->start + fm->size)  return fm->name;
         fm = fm->next;
     }
-    return 0;
+    return "???";
+}
+
+void func_call(paddr_t src, paddr_t dest)
+{
+    char *name = match_func(dest);
+    printf(FMT_PADDR ": ", src);
+    for (int i = 0; i < calls; i++) printf("  ");
+    printf("call [%s@" FMT_PADDR "]\n", name, dest);
+    calls++;
+}
+
+void func_ret(paddr_t src)
+{
+    calls--;
+    char *name = match_func(src);
+    printf(FMT_PADDR ": ", src);
+    for (int i = 0; i < calls; i++) printf("  ");
+    printf("ret [%s]\n", name);
 }

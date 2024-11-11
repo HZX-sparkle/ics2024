@@ -157,6 +157,12 @@ config MTRACE
   help
     Enable memory tracing for memory access tracking.
 
+config FTRACE
+  bool "Enable Function Trace"
+  default n
+  help
+    Enable function tracing for funtion call and return tracking.
+
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
   bool "Enable differential testing"
