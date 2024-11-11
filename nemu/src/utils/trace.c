@@ -115,6 +115,8 @@ void init_elf(const char *elf_file)
 
 void gen_fm(word_t count)
 {
+    printf("Generating function map......\n");
+    printf("%-10s %-10s %-10s\n", "Name", "Address", "Size");
     for (size_t i = 0; i < count; i++)
     {
         Elf32_Sym sym = symtab[i];
@@ -130,6 +132,7 @@ void gen_fm(word_t count)
             }
             fm->start = sym.st_value;
             fm->size = sym.st_size;
+            printf("%-10s " FMT_PADDR " %-10x\n", fm->name, fm->start, fm->size);
             fm->next = head;
             head = fm;
         }
