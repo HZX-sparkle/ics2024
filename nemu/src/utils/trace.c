@@ -95,7 +95,6 @@ void init_elf(const char *elf_file)
             strtab = malloc(strtab_hdr.sh_size);
             fseek(elf_fp, strtab_hdr.sh_offset, SEEK_SET);
             Assert(fread(strtab, strtab_hdr.sh_size, 1, elf_fp) == 1, "Cannot read string table");
-            assert(0);
         }
         if (strcmp(name, ".symtab") == 0)
         {
