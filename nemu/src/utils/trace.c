@@ -85,6 +85,7 @@ void init_elf(const char *elf_file)
     Assert(fread(shstrtab, shstrtab_hdr.sh_size, 1, elf_fp) == 1, "Cannot read seciton header string table");
 
     // find .strtab and .symtab
+    int count = 0;
     for (size_t i = 0; i < ehdr.e_shnum; i++)
     {
         char *name = &shstrtab[shdr[i].sh_name];
@@ -102,11 +103,12 @@ void init_elf(const char *elf_file)
             symtab = malloc(symtab_hdr.sh_size);
             fseek(elf_fp, symtab_hdr.sh_offset, SEEK_SET);
             Assert(fread(symtab, symtab_hdr.sh_size, 1, elf_fp) == 1, "Cannot read symbol table");
-            gen_fm(symtab_hdr.sh_size / sizeof(Elf32_Sym));
+            count = symtab_hdr.sh_size / sizeof(Elf32_Sym);
         }
     }
     Assert(symtab, "Failed to find symbol table");
     Assert(strtab, "Failed to find string table");
+    gen_fm(count);
     free(shdr);
     free(shstrtab);
     fclose(elf_fp);
