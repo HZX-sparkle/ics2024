@@ -60,6 +60,7 @@ static FM* head = NULL;
 void gen_fm(word_t count);
 void init_elf(const char *elf_file)
 {
+    assert(0);
     if (elf_file != NULL)
     {
         FILE *fp = fopen(elf_file, "rb");
