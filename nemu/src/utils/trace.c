@@ -63,13 +63,13 @@ void init_elf(const char *elf_file)
 {
     if (elf_file != NULL)
     {
-        assert(0);
         FILE *fp = fopen(elf_file, "rb");
         Assert(fp, "Can not open '%s'", elf_file);
         elf_fp = fp;
     } else return;
     Log("Elf file at %s", elf_file);
     // read elf header
+    assert(0);
     Assert(fread(&ehdr, sizeof(Elf32_Ehdr), 1, elf_fp) == 1, "Cannot read elf header");
 
     // read all section headers to shdr
