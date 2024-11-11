@@ -78,10 +78,10 @@ void init_elf(const char *elf_file)
     Assert(fread(shdr, sizeof(Elf32_Shdr), ehdr.e_shnum, elf_fp) == ehdr.e_shnum, "Cannot read seciton header");
 
     // get shstrtab_hdr whose section(section header string table) stores the name of other sections
-    assert(0);
     Elf32_Shdr shstrtab_hdr = shdr[ehdr.e_shstrndx];
     char *shstrtab = malloc(shstrtab_hdr.sh_size);
     // set fp to section header string table
+    assert(0);
     fseek(elf_fp, shstrtab_hdr.sh_offset, SEEK_SET);
     Assert(fread(shstrtab, shstrtab_hdr.sh_size, 1, elf_fp) == 1, "Cannot read seciton header string table");
 
