@@ -87,7 +87,6 @@ void init_elf(const char *elf_file)
     // find .strtab and .symtab
     for (size_t i = 0; i < ehdr.e_shnum; i++)
     {
-        assert(0);
         char *name = &shstrtab[shdr[i].sh_name];
         if (strcmp(name, ".strtab") == 0)
         {
@@ -105,6 +104,8 @@ void init_elf(const char *elf_file)
             gen_fm(symtab_hdr.sh_size / sizeof(Elf32_Sym));
         }
     }
+    assert(0);
+
     Assert(symtab, "Failed to find symbol table");
     Assert(strtab, "Failed to find string table");
     free(shdr);
