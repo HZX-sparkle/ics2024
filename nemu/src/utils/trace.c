@@ -63,6 +63,7 @@ void init_elf(const char *elf_file)
     assert(0);
     if (elf_file != NULL)
     {
+        assert(0);
         FILE *fp = fopen(elf_file, "rb");
         Assert(fp, "Can not open '%s'", elf_file);
         elf_fp = fp;
