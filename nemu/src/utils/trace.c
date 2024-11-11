@@ -104,8 +104,6 @@ void init_elf(const char *elf_file)
             gen_fm(symtab_hdr.sh_size / sizeof(Elf32_Sym));
         }
     }
-    assert(0);
-
     Assert(symtab, "Failed to find symbol table");
     Assert(strtab, "Failed to find string table");
     free(shdr);
@@ -115,6 +113,8 @@ void init_elf(const char *elf_file)
 
 void gen_fm(word_t count)
 {
+    assert(0);
+
     for (size_t i = 0; i < count; i++)
     {
         Elf32_Sym *sym = &symtab[i];
