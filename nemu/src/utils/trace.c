@@ -119,10 +119,9 @@ void gen_fm(word_t count)
         if (ELF32_ST_TYPE(sym->st_info) == STT_FUNC)
         {
             FM* fm = malloc(sizeof(FM));
+    assert(0);
             char *name = &strtab[sym->st_name];
             strcpy(fm->name, name);
-    assert(0);
-
             fm->start = sym->st_value;
             fm->size = sym->st_size;
             fm->next = head;
