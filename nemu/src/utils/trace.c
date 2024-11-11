@@ -69,10 +69,10 @@ void init_elf(const char *elf_file)
     } else return;
     Log("Elf file at %s", elf_file);
     // read elf header
-    assert(0);
     Assert(fread(&ehdr, sizeof(Elf32_Ehdr), 1, elf_fp) == 1, "Cannot read elf header");
 
     // read all section headers to shdr
+    assert(0);
     shdr = malloc(ehdr.e_shnum * sizeof(Elf32_Shdr));
     // set fp to section headers
     fseek(elf_fp, ehdr.e_shoff, SEEK_SET);
