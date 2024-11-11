@@ -66,8 +66,8 @@ void init_elf(const char *elf_file)
         FILE *fp = fopen(elf_file, "rb");
         Assert(fp, "Can not open '%s'", elf_file);
         elf_fp = fp;
-    }
-    Log("Elf file at %s", elf_file ? elf_file : "stdout");
+    } else return;
+    Log("Elf file at %s", elf_file);
     // read elf header
     Assert(fread(&ehdr, sizeof(Elf32_Ehdr), 1, elf_fp) == 1, "Cannot read elf header");
 
