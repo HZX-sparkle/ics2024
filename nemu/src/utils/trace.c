@@ -132,7 +132,7 @@ void gen_fm(word_t count)
             }
             fm->start = sym.st_value;
             fm->size = sym.st_size;
-            printf("%-10s " FMT_PADDR " %-10x\n", fm->name, fm->start, fm->size);
+            printf("%-10s " FMT_PADDR " %-10d\n", fm->name, fm->start, fm->size);
             fm->next = head;
             head = fm;
         }
