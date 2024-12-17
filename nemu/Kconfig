@@ -151,6 +151,17 @@ config ITRACE_COND
   string "Only trace instructions when the condition is true"
   default "true"
 
+config MTRACE
+  bool "Enable Memory Trace"
+  default n
+  help
+    Enable memory tracing for memory access tracking.
+
+config FTRACE
+  bool "Enable Function Trace"
+  default n
+  help
+    Enable function tracing for funtion call and return tracking.
 
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
