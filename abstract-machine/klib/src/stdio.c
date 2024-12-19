@@ -110,12 +110,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     p++;
   }
   out[len] = 0;
-  while (*out)
-  {
-    putch(*out);
-    out++;
-  }
-  putch('\n');
   va_end(ap);
   return len;
 }
