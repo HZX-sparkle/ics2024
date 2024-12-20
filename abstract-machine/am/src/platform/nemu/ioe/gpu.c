@@ -29,10 +29,10 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
       x = ctl->x, y = ctl->y;
   uint32_t *pixels = ctl->pixels;
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  for (int i = x ; i < x+w; i++)
+  int n = 0;
+  for (int j = y; j < y+h; j++)
   {
-    int n = 0;
-    for (int j = y; j < y+h; j++)
+    for (int i = x ; i < x+w; i++)
     {
       fb[i+j*width] = pixels[n++];
     }
