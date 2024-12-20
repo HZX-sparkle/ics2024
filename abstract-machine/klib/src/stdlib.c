@@ -4,9 +4,7 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 static unsigned long int next = 1;
-#if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
 static char *hbrk;
-#endif
 
 int rand(void) {
   // RAND_MAX assumed to be 32767
@@ -36,8 +34,7 @@ void *malloc(size_t size) {
   // On native, malloc() will be called during initializaion of C runtime.
   // Therefore do not call panic() here, else it will yield a dead recursion:
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
-#if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
-  printf("malloc\n");
+// #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
   size  = (size_t)ROUNDUP(size, 8);
   if (hbrk == NULL) hbrk = (void*)ROUNDUP(heap.start, 8);
   char *old = hbrk;
@@ -47,8 +44,7 @@ void *malloc(size_t size) {
     *p = 0;
   }
   return (void*)old;
-#endif
-  return NULL;
+// #endif
 }
 
 void free(void *ptr) {
