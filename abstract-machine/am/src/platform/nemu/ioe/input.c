@@ -7,7 +7,7 @@
 void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
   uint32_t k = AM_KEY_NONE;
   k = inl(KBD_ADDR);
-  printf("k = 0x%08X\n", k); 
+  printf("k = 0x%08x\n", k); 
   kbd->keydown = (KEYDOWN_MASK & k) ? true : false;
   kbd->keycode = k & ~KEYDOWN_MASK;
 }
