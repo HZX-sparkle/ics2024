@@ -23,6 +23,9 @@
 static uint8_t *io_space = NULL;
 static uint8_t *p_space = NULL;
 
+void dtrace_read(paddr_t addr, int len, const char* name);
+void dtrace_write(paddr_t addr, int len, const char* name, word_t data);
+
 uint8_t* new_space(int size) {
   uint8_t *p = p_space;
   // page aligned;
