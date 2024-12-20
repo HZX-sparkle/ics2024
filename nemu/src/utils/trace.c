@@ -167,3 +167,18 @@ void func_ret(paddr_t src)
     for (int i = 0; i < calls; i++) printf("  ");
     printf("ret [%s]\n", name);
 }
+
+// dtrace
+void dtrace_read(paddr_t addr, int len, const char* name)
+{
+    printf("dtrace: device %s read at " FMT_PADDR ","
+           " len = %d\n",
+           name, addr, len);
+}
+
+void dtrace_write(paddr_t addr, int len, const char *name, word_t data)
+{
+    printf("dtrace: device %s write at " FMT_PADDR ","
+           " len = %d, data = " FMT_WORD "\n",
+           name, addr, len, data);
+}

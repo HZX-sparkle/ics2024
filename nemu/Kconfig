@@ -163,6 +163,12 @@ config FTRACE
   help
     Enable function tracing for funtion call and return tracking.
 
+config DTRACE
+  bool "Enable Device Trace"
+  default n
+  help
+    Enable device tracing for device access tracking.
+
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
   bool "Enable differential testing"
