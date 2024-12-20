@@ -33,7 +33,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       if (width != 0)
       {
         // 0填充和空格填充
-        if(*++p == '0') padding = '0';
+        if(*p == '0') padding = '0';
         while ( *p >= '0' && *p <= '9') p++;
       }
       
